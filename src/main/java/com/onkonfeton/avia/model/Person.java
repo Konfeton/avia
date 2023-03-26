@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +24,8 @@ public class Person {
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "date_of_birthday")
-    private Date dateOfBirthday;
+    private LocalDateTime dateOfBirthday;
+    private double miles;
 
     @JsonIgnore
     @OneToMany(mappedBy = "person")
@@ -41,6 +42,5 @@ public class Person {
 
 
 
-    private double miles;
 
 }

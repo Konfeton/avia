@@ -16,6 +16,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
+    private LocalDateTime time;
 
     @ManyToOne
     @JoinColumn(name = "person_id")
@@ -25,7 +26,6 @@ public class Ticket {
     @JoinColumn(name = "flight_id")
     private Flight flight;
 
-    private LocalDateTime time;
 
 
 

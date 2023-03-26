@@ -6,11 +6,15 @@
 <body>
 <form th:action="@{/people}" th:method="post" th:object="${person}">
     <label for="login">Login</label>
-    <input type="text" th:value="${login}" id="login">
+    <input type="text" th:field="*{login}" id="login">
     <label for="password">Password</label>
-    <input type="text" th:value="${password}" id="password">
+    <input type="text" th:field="*{password}" id="password">
     <label for="email">Email</label>
-    <input type="text" th:value="${email}" id="email">
+    <input type="text" th:field="*{email}" id="email">
+    <label for="role">role</label>
+    <input type="text" th:field="*{role}" id="role">
+    <label for="status">status</label>
+    <input type="text" th:field="*{status}" id="status">
     <input type="submit" value="create">
 </form>
 </body>

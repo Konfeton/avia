@@ -17,7 +17,6 @@ public class Card {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
-
     @Column(name = "card_number")
     private String cardNumber;
     @Column(name = "date_of_expire")

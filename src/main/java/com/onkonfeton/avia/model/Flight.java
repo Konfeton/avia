@@ -31,7 +31,6 @@ public class Flight {
     @JoinColumn(name = "plane_id")
     private Plane plane;
 
-
     @OneToOne
     @JoinColumn(name = "departure_city_id")
     private City departureCity;
