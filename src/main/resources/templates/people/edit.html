@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org ">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<form th:object="${user}" th:action="@{/people/{id}(id=${user.getId()})}" th:method="PATCH" >
+<form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
     <input type="text" th:field="*{login}">
     <input type="text" th:field="*{password}">
     <input type="text" th:field="*{email}">

@@ -1,62 +1,61 @@
 package com.onkonfeton.avia.controller;
 
-import com.onkonfeton.avia.model.User;
-import com.onkonfeton.avia.repository.UserRepository;
-import com.onkonfeton.avia.service.UserService;
+import com.onkonfeton.avia.model.Person;
+import com.onkonfeton.avia.service.PersonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/people")
-public class UserController {
-    private final UserService userService;
+public class PersonController {
+    private final PersonService personService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public PersonController(PersonService personService) {
+        this.personService = personService;
     }
 
     @PostMapping
-    public String add(@ModelAttribute("person") User user){
-        userService.save(user);
+    public String add(@ModelAttribute("person") Person person){
+        personService.save(person);
         return "redirect:/people";
     }
 
     @GetMapping("/new")
     public String newPersonForm(Model model){
-        model.addAttribute("person", new User());
+        model.addAttribute("person", new Person());
         return "people/new";
     }
 
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") long id, Model model){
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("person", personService.findById(id));
         return "/people/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("user") User user,
+    public String update(@ModelAttribute("person") Person person,
                          @PathVariable("id") long id){
-        userService.update(user);
+        personService.update(person);
         return "redirect:/people/"+id+"/edit";
     }
 
     @GetMapping
     public String index(Model model){
-        model.addAttribute("people", userService.findAll());
+        model.addAttribute("people", personService.findAll());
         return "people/index";
     }
 
     @GetMapping("/{id}")
-    public String showUser(@PathVariable("id") long id,
+    public String showPerson(@PathVariable("id") long id,
                            Model model){
-        model.addAttribute("person", userService.findById(id));
+        model.addAttribute("person", personService.findById(id));
         return "people/show";
     }
 
     @DeleteMapping("/{id}")
     public String delete(@PathVariable("id") long id){
-        userService.delete(id);
+        personService.delete(id);
         return "redirect:/people";
     }
 }
