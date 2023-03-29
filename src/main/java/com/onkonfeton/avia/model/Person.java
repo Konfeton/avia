@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,17 +19,18 @@ import java.util.Set;
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id", nullable = false, unique = true)
     private Integer id;
-    private String login;
+    @Column(name= "email", unique = true, nullable = false)
+    private String email;
+    @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
     @Column(name = "date_of_birthday")
-    private LocalDateTime dateOfBirthday;
-    private String email;
+    private LocalDate dateOfBirthday;
     private double miles;
 
     @Enumerated(EnumType.STRING)
@@ -44,9 +45,5 @@ public class Person {
     @OneToOne
     @JoinColumn(name = "card_id")
     private Card card;
-
-
-
-
 
 }

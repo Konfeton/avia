@@ -15,6 +15,7 @@ public class Plane {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
+    @Column(name = "plane_name", nullable = false)
     private String name;
 
 }
