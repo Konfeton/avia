@@ -22,7 +22,7 @@ public class FlightController {
     @GetMapping
     public String index(Model model){
         model.addAttribute("flights", flightService.findAll());
-        return "/flight/index";
+        return "flight/index";
     }
 
 
@@ -33,8 +33,9 @@ public class FlightController {
         return "flight/new";
     }
 
-    @PostMapping("/new")
+    @PostMapping
     public String addNewFlight(@ModelAttribute("flight") Flight flight){
+        System.out.println(flight.toString());
         flightService.save(flight);
         return "redirect:/flight/index";
     }

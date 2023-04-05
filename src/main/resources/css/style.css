@@ -1,0 +1,111 @@
+* {
+  margin: 0 auto;
+  font-family: "Montserrat", sans-serif;
+  color: rgb(56, 69, 83);
+}
+article {
+  background-size: cover;
+  flex-basis: 3;
+  flex-grow: 4;
+}
+main {
+  display: flex;
+  flex-direction: row;
+  height: 80vh;
+  width: 100vw;
+}
+nav {
+  background-color: antiquewhite;
+  flex-basis: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+}
+a {
+  margin-top: 1vh;
+  margin-left: 1vw;
+  padding-left: 0;
+}
+aside {
+  background-color: coral;
+  flex-basis: 1;
+  flex-grow: 1;
+}
+header {
+  height: 15vh;
+  background-color: slategray;
+  display: flex;
+  align-items: center;
+}
+footer {
+  height: 5vh;
+  background-color: slategray;
+}
+h1 {
+  color: antiquewhite;
+  margin-left: 10vw;
+}
+h1 span {
+  color: rgb(255, 158, 141);
+}
+form {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+form label,
+form input {
+  margin-left: 2vw;
+}
+form label {
+  margin-top: 1vh;
+}
+#screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  opacity: 0.4;
+  display: none;
+  z-index: 2;
+  position: fixed;
+}
+
+table {
+  border: 1px solid slategray;
+  border-collapse: collapse;
+  height: 70%;
+  margin: 1vw;
+}
+td,
+th {
+  border: 1px solid slategray;
+  border-collapse: collapse;
+}
+
+.buttons {
+  margin-top: 25vh;
+  margin-left: 40vw;
+}
+h3 {
+  margin-top: 4vh;
+  margin-left: 2vw;
+}
+footer {
+  color: antiquewhite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+aside {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+.block {
+  height: 15%;
+  width: 70%;
+  background-color: rgb(23, 35, 47);
+  margin: 2vw;
+}

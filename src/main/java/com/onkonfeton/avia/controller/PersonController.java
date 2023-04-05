@@ -28,14 +28,14 @@ public class PersonController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable("id") long id, Model model){
+    public String editForm(@PathVariable("id") int id, Model model){
         model.addAttribute("person", personService.findById(id));
         return "/people/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") Person person,
-                         @PathVariable("id") long id){
+                         @PathVariable("id") int id){
         personService.update(person);
         return "redirect:/people/"+id+"/edit";
     }
@@ -47,14 +47,14 @@ public class PersonController {
     }
 
     @GetMapping("/{id}")
-    public String showPerson(@PathVariable("id") long id,
+    public String showPerson(@PathVariable("id") int id,
                            Model model){
         model.addAttribute("person", personService.findById(id));
         return "people/show";
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") long id){
+    public String delete(@PathVariable("id") int id){
         personService.delete(id);
         return "redirect:/people";
     }

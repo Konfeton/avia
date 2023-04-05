@@ -21,16 +21,15 @@ public class PersonService {
         return personRepository.save(person);
     }
 
-    public Person findById(Long id){
+    public Person findById(int id){
         return personRepository.findById(id).stream().findAny().orElse(null);
     }
 
     public void update(Person person){
         personRepository.save(person);
-
     }
 
-    public void delete(long id) {
+    public void delete(int id) {
         personRepository.deleteById(id);
     }
 }
