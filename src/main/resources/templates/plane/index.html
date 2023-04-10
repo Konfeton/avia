@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
 
+<div th:each="plane : ${planes}">
+    <p th:text="${plane.getName()}"></p>
+    <a th:href="@{/plane/{id}/edit(id=${plane.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/plane/{id}(id=${plane.getId()})}">
+        <input type="submit" value="Delete">
+    </form>
+</div>
 </body>
+
 </html>

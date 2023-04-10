@@ -21,4 +21,12 @@ public class FlightService {
     public List<Flight> findAll() {
         return flightRepository.findAll();
     }
+
+    public void update(Flight flight) {
+        flightRepository.save(flight);
+    }
+
+    public Flight findById(int id) {
+        return  flightRepository.findById(id).stream().findAny().orElse(null);
+    }
 }

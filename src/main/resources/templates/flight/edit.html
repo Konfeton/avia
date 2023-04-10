@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
-<form th:action="@{/flight}" th:method="POST" th:object="${flight}">
+<!-- TODO: add selected like cities and planes as well as time -->
+<form th:object="${flight}" th:action="@{/flight/{id}(id=${flight.getId()})}" th:method="PATCH" >
     <label for="arrival-time">Время прибытия</label>
     <input type="datetime-local"
            id="arrival-time"
@@ -38,7 +38,6 @@
                 th:text="${plane.getName()}">
         </option>
     </select>
-    <a href="/plane/new">Add Plane</a>
     <br>
     <label for="departure-city">Город отправки</label>
     <select id="departure-city" th:field="*{departureCity}">
@@ -47,7 +46,6 @@
                 th:text="${city.getName()}">
         </option>
     </select>
-    <a href="/city/new">Add departure city</a>
     <br>
     <label for="arrival-city">Город прибытия</label>
     <select id="arrival-city" th:field="*{arrivalCity}">
@@ -56,10 +54,7 @@
                 th:text="${city.getName()}">
         </option>
     </select>
-    <a href="/city/new">Add arrival city</a>
-    <input type="submit" value="Создать">
-
+    <input type="submit" value="Save">
 </form>
-
 </body>
 </html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:each="flight : ${flights}">
+    <p th:text="${flight.getDepartureTime()}"></p>
+    <p th:text="${flight.getArrivalTime()}"></p>
+    <p th:text="${flight.getFlightInfo()}"></p>
+    <p th:text="${flight.getPrice()}"></p>
+    <p th:text="${flight.getPlane().getName()}"></p>
+    <p th:text="${flight.getDepartureCity().getName()}"></p>
+    <p th:text="${flight.getArrivalCity().getName()}"></p>
+    <a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">
+        <input type="submit" value="Delete">
+    </form>
+    <a href="/flight/new">Add flight</a>
+</div>
+</body>
+</html>

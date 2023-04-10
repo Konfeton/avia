@@ -30,14 +30,13 @@ public class PersonController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") int id, Model model){
         model.addAttribute("person", personService.findById(id));
-        return "/people/edit";
+        return "people/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person,
-                         @PathVariable("id") int id){
+    public String update(@ModelAttribute("person") Person person){
         personService.update(person);
-        return "redirect:/people/"+id+"/edit";
+        return "redirect:/people";
     }
 
     @GetMapping

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/plane/{id}(id=${plane.getId()})}" th:method="PATCH" th:object="${plane}">
+    <input type="text" th:field="*{name}">
+    <input type="submit" value="Сохранить">
+</form>
+</body>
+</html>
