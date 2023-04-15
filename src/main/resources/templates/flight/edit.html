@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<!-- TODO: add selected like cities and planes as well as time -->
+
 <form th:object="${flight}" th:action="@{/flight/{id}(id=${flight.getId()})}" th:method="PATCH" >
     <label for="arrival-time">Время прибытия</label>
     <input type="datetime-local"

@@ -1,6 +1,8 @@
 package com.onkonfeton.avia.service;
 
 import com.onkonfeton.avia.model.Person;
+import com.onkonfeton.avia.model.enums.Role;
+import com.onkonfeton.avia.model.enums.Status;
 import com.onkonfeton.avia.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,12 @@ public class PersonService {
     }
 
     public Person save(Person person) {
+        if (person.getRole() == null) {
+            person.setRole(Role.USER);
+        }
+        if (person.getStatus() == null) {
+            person.setStatus(Status.ACTIVE);
+        }
         return personRepository.save(person);
     }
 

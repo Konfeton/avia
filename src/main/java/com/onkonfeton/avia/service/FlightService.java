@@ -29,4 +29,8 @@ public class FlightService {
     public Flight findById(int id) {
         return  flightRepository.findById(id).stream().findAny().orElse(null);
     }
+
+    public void delete(int id) {
+        flightRepository.deleteById(id);
+    }
 }

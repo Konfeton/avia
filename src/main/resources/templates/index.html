@@ -1,87 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/style.css" />
+    <meta charset="utf-8">
+    <title>Welcome</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;800&display=swap"
-            rel="stylesheet"
-    />
-
-    <title>Travel Agency</title>
 </head>
 <body>
-
 <header>
-    <h1>travel agency</h1>
+    TOur
 </header>
-<main>
-    <article>
-        <h3>Please, help us be perfect</h3>
-        <form>
-            <label
-            >How many times have you travelled with us?<input
-                    type="number"
-                    id="times"
-                    max="10000"
-                    min="0"
-                    required
-            /></label>
-            <label
-            >Choose the way you travelled last time: <br />
-                <input name="transport" type="radio" value="train" /> By
-                train</label
-            >
-            <label
-            ><input name="transport" type="radio" value="plane" /> By
-                plane</label
-            >
-            <label
-            ><input name="transport" type="radio" value="bus" /> By bus</label
-            >
-            <label>Did you like it?<input type="checkbox" required name="like" /></label>
-            <label
-            >Choose the most attractive color of ticket you'd like to get:<input
-                    type="color"
-                    name="color"
-                    required
-            /></label>
-            <label>Your name:<input placeholder="Enter your name..." required type="text" name="name" /></label>
-            <label
-            >You can leave your phone number to stay connnected<input
-                    inputmode="tel"
-                    type="tel"
-                    name="tel"
-                    placeholder="Enter your phone..."
-                    pattern="\+375[\d]{9}"
-                    required
-            /></label>
+<div th:if="${session.user.getRole().toString.equals('ADMIN')}">
+    this is mess
+</div>
 
-            <input type="hidden" name="reviewDate" value="" />
-            <div class="buttons">
-                <input type="submit" value="send" />
-                <input type="reset" value="reset"/>
-            </div>
-        </form>
-    </article>
-    <nav>
-        <a href="https://developer.mozilla.org/ru/docs/Web/JavaScript" target="_blank">Thanks</a>
-        <a href="https://learn.javascript.ru/js" target="_blank">Thanks too</a>
-    </nav>
-    <aside>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
-        <div class="block"></div>
+<div th:each="flight : ${flights}">
+    <form th:action="@{/ticket/{flight_id}(flight_id=${flight.getId()})}" th:method="POST">
+        <input type="submit" value="BUY">
+    </form>
+    <input type="hidden" th:value="${flight.getId()}">
+    <p >[(${flight.getDepartureTime()})]</p> <!--equals th:atext="" -->
+    <p th:text="${flight.getArrivalTime()}"></p>
+    <p th:text="${flight.getFlightInfo()}"></p>
+    <p th:text="${flight.getPrice()}"></p>
+    <p th:text="${flight.getPlane().getName()}"></p>
+    <p th:text="${flight.getDepartureCity().getName()}"></p>
+    <p th:text="${flight.getArrivalCity().getName()}"></p>
+    <a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">
+        <input type="submit" value="Delete">
+    </form>
+    <a href="/flight/new">Add flight</a>
+</div>
 
-    </aside>
-</main>
-<footer>©TRAVELAGENCY </br> all rights reserved</footer>
 </body>
 </html>

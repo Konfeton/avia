@@ -9,57 +9,15 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"><i class="fa-solid fa-plane"></i></a>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">About</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-user"></i>
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
 
 <form th:action="@{/people}" th:method="post" th:object="${person}">
-    <label for="login">Login</label>
-    <input type="text" th:field="*{login}" id="login">
-    <label for="password">Password</label>
-    <input type="text" th:field="*{password}" id="password">
     <label for="email">Email</label>
     <input type="text" th:field="*{email}" id="email">
-    <label for="role">role</label>
-    <input type="text" th:field="*{role}" id="role">
-    <label for="status">status</label>
-    <input type="text" th:field="*{status}" id="status">
+    <label for="password">Password</label>
+    <input type="text" th:field="*{password}" id="password">
     <input type="submit" value="create">
 </form>
 
-<form class="row g-3">
-    <div class="col-md-6">
-        <label for="inputEmail4" class="form-label">Email</label>
-        <input type="email" class="form-control" id="inputEmail4">
-    </div>
-    <div class="col-md-6">
-        <label for="inputPassword4" class="form-label">Password</label>
-        <input type="password" class="form-control" id="inputPassword4">
-    </div>
-</form>
+
 </body>
 </html>

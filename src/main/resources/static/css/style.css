@@ -1,0 +1,9 @@
+* {
+  margin: 0 auto;
+}
+header {
+  color: aliceblue;
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  background-color: grey;
+}
