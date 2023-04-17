@@ -1,5 +1,6 @@
 package com.onkonfeton.avia.service;
 
+import com.onkonfeton.avia.exceptions.PersonAlreadyExistException;
 import com.onkonfeton.avia.model.Person;
 import com.onkonfeton.avia.model.enums.Role;
 import com.onkonfeton.avia.model.enums.Status;
@@ -19,14 +20,22 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Person save(Person person) {
+    public Person save(Person person) throws PersonAlreadyExistException {
+        if (findByEmail(person.getEmail()) != null){
+            throw new PersonAlreadyExistException();
+        }
         if (person.getRole() == null) {
             person.setRole(Role.USER);
         }
         if (person.getStatus() == null) {
             person.setStatus(Status.ACTIVE);
         }
+
         return personRepository.save(person);
+    }
+
+    public Person findByEmail(String email){
+        return personRepository.findByEmail(email);
     }
 
     public Person findById(int id){

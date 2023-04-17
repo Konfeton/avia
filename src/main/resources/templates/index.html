@@ -9,10 +9,11 @@
 <body>
 <header>
     TOur
+    <a th:if="${session.user == null}" href="/people/registration">Register</a>
+    <a th:if="${session.user == null}" href="/people/login">Login</a>
+    <p th:if="${session.user != null}" th:text="${session.user.getFirstName()}"></p>
+
 </header>
-<div th:if="${session.user.getRole().toString.equals('ADMIN')}">
-    this is mess
-</div>
 
 <div th:each="flight : ${flights}">
     <form th:action="@{/ticket/{flight_id}(flight_id=${flight.getId()})}" th:method="POST">

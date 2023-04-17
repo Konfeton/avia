@@ -1,7 +1,9 @@
 package com.onkonfeton.avia.controller;
 
+import com.onkonfeton.avia.exceptions.PersonAlreadyExistException;
 import com.onkonfeton.avia.model.Person;
 import com.onkonfeton.avia.service.PersonService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +18,47 @@ public class PersonController {
     }
 
     @PostMapping
-    public String add(@ModelAttribute("person") Person person){
-        personService.save(person);
-        return "redirect:/people";
+    public String add(@ModelAttribute("person") Person person,
+                      HttpSession httpSession,
+                      Model model){
+        try {
+            personService.save(person);
+            httpSession.setAttribute("user", person);
+            return "redirect:/";
+        } catch (PersonAlreadyExistException e) {
+            model.addAttribute("person", person);
+            return "people/registration";
+        }
     }
 
-    @GetMapping("/new")
+    @PostMapping("/login")
+    public String login(@ModelAttribute("person") Person person,
+                        HttpSession httpSession,
+                        Model model){
+        Person user = personService.findByEmail(person.getEmail());
+        if (user != null && user.getPassword().equals(person.getPassword()) && user.getStatus().toString().equals("ACTIVE")) {
+            httpSession.setAttribute("user", user);
+            return "redirect:/";
+        }else{
+            model.addAttribute("person", person);
+            return "people/login";
+        }
+    }
+
+    @GetMapping("/registration")
     public String newPersonForm(Model model){
-        model.addAttribute("person", new Person());
-        return "people/new";
+        if (!model.containsAttribute("person")) {
+            model.addAttribute("person", new Person());
+        }
+        return "people/registration";
+    }
+
+    @GetMapping("/login")
+    public String logInForm(Model model){
+        if (!model.containsAttribute("person")) {
+            model.addAttribute("person", new Person());
+        }
+        return "people/login";
     }
 
     @GetMapping("/{id}/edit")
