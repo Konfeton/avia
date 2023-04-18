@@ -7,3 +7,10 @@ header {
   margin-bottom: 40px;
   background-color: grey;
 }
+
+footer {
+  color: aliceblue;
+  padding: 25px 30px;
+  margin-bottom: 40px;
+  background-color: black;
+}

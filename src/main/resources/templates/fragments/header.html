@@ -1,0 +1,11 @@
+<header th:fragment="header">
+  <a href="/">Tour</a>
+  <th:block th:if="${session.user == null}" >
+    <a href="/people/registration">Register</a>
+    <a href="/people/login">Login</a>
+  </th:block>
+  <th:block th:if="${session.user != null}">
+    <a th:text="${session.user.getFirstName()}" th:href="@{/people/{id}/edit(id=${session.user.getId()})}"></a>
+    <a href="/people/logout">Logout</a>
+  </th:block>
+</header>

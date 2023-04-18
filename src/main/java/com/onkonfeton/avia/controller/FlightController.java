@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/flight")
 public class FlightController {
     private final FlightService flightService;
     private final CityService cityService;
@@ -21,27 +22,26 @@ public class FlightController {
         this.planeService = planeService;
     }
 
-
-    @GetMapping("/flight/new")
+    @GetMapping("/new")
     public String getNewFlightForm(@ModelAttribute("flight") Flight flight, Model model){
         model.addAttribute("cities", cityService.findAll());
         model.addAttribute("planes", planeService.findAll());
         return "flight/new";
     }
 
-    @PostMapping("/flight")
+    @PostMapping("")
     public String addNewFlight(@ModelAttribute("flight") Flight flight){
         flightService.save(flight);
-        return "redirect:/flight";
+        return "redirect:/";
     }
 
-    @PatchMapping("/flight/{id}")
+    @PatchMapping("/{id}")
     public String update(@ModelAttribute("flight") Flight flight){
         flightService.update(flight);
-        return "redirect:/flight";
+        return "redirect:/";
     }
 
-    @GetMapping("/flight/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String showFlight(@PathVariable("id") int id,
                              Model model){
         model.addAttribute("flight", flightService.findById(id));
@@ -50,11 +50,10 @@ public class FlightController {
         return "flight/edit";
     }
 
-    @DeleteMapping("/flight/{id}")
+    @DeleteMapping("/{id}")
     public String deleteFlight(@PathVariable("id") int id){
         flightService.delete(id);
-        return "redirect:/flight";
+        return "redirect:/";
 
     }
-
 }

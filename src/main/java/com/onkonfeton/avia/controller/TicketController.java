@@ -1,18 +1,14 @@
 package com.onkonfeton.avia.controller;
 
-import com.onkonfeton.avia.model.Flight;
 import com.onkonfeton.avia.model.Person;
 import com.onkonfeton.avia.model.Ticket;
 import com.onkonfeton.avia.service.TicketService;
 import jakarta.servlet.http.HttpSession;
-import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/ticket")
@@ -34,8 +30,8 @@ public class TicketController {
         return "ticket/new";
     }
 
-    @PostMapping("/{flight_id}")
-    public String addNewTicket(@PathVariable("flight_id") int flight_id, HttpSession session){
+    @PostMapping("")
+    public String addNewTicket(@RequestParam("flight_id") int flight_id, HttpSession session){
         Ticket ticket = new Ticket();
         ticket.setTime(LocalDateTime.now());
         ticketService.save(ticket, flight_id, ((Person)session.getAttribute("user")).getId());

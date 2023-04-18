@@ -1,17 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/3d4b06e265.js" crossorigin="anonymous"></script>
     <title>Title</title>
 </head>
 <body>
-<form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
-    <input type="text" th:field="*{login}">
-    <input type="text" th:field="*{password}">
-    <input type="text" th:field="*{email}">
-    <input type="text" th:field="*{role}">
-    <input type="text" th:field="*{status}">
-    <input type="submit" value="Save">
-</form>
+<div th:replace="fragments/header :: header"></div>
+
+<th:block th:if="${session.user.getRole().toString().equals('ADMIN')}">
+    <nav>
+        <ul>
+            <li><a href="/people">Work with users</a></li>
+            <li><a href="/city">Work with cities</a></li>
+            <li><a href="/plane">Work with plane</a></li>
+        </ul>
+    </nav>
+</th:block>
+    <div th:if="${session.user.getId() == person.getId()}">
+        <form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
+            <label for="email">Email</label>
+            <input type="email" th:field="*{email}" id="email" required>
+            <label for="password">Password</label>
+            <input type="text" th:field="*{password}" id="password" required>
+            <label for="lastname">Lastname</label>
+            <input type="text" th:field="*{lastName}" id="lastname" required>
+            <label for="firstname">Firstname</label>
+            <input type="text" th:field="*{firstName}" id="firstname" required>
+            <label for="date-of-birthday">DateOfBirthday</label>
+            <input type="date" th:field="*{dateOfBirthday}" id="date-of-birthday" required>
+            <input type="submit" value="Update">
+        </form>
+        <a th:href="@{/people/{id}/ticket(id=${person.getId()})}">Show Tickets</a>
+    </div>
+<div th:if="${session.user.getId() != person.getId()}">
+        <form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
+            <label for="email">Email</label>
+            <input type="email" th:field="*{email}" id="email" readonly>
+            <label for="password">Password</label>
+            <input type="text" th:field="*{password}" id="password" readonly>
+            <label for="lastname">Lastname</label>
+            <input type="text" th:field="*{lastName}" id="lastname" readonly>
+            <label for="firstname">Firstname</label>
+            <input type="text" th:field="*{firstName}" id="firstname" readonly>
+            <label for="date-of-birthday">DateOfBirthday</label>
+            <input type="date" th:field="*{dateOfBirthday}" id="date-of-birthday" readonly>
+            <select th:field="*{role}">
+                <option th:each="role : ${roles}"
+                        th:value="${role}"
+                        th:text="${role}"
+                        th:selected="${person.getRole() == role}">
+                </option>
+            </select>
+            <select th:field="*{status}">
+                <option th:each="status : ${statuses}"
+                        th:value="${status}"
+                        th:text="${status}"
+                        th:selected="${person.getStatus() == status}">
+                </option>
+            </select>
+            <input type="submit" value="Update">
+        </form>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+
 </body>
 </html>

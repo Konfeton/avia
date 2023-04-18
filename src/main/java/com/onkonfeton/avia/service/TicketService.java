@@ -1,5 +1,6 @@
 package com.onkonfeton.avia.service;
 
+import com.onkonfeton.avia.model.Person;
 import com.onkonfeton.avia.model.Ticket;
 import com.onkonfeton.avia.repository.FlightRepository;
 import com.onkonfeton.avia.repository.PersonRepository;
@@ -7,6 +8,7 @@ import com.onkonfeton.avia.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TicketService {
@@ -41,5 +43,9 @@ public class TicketService {
 
     public void delete(int id) {
         ticketRepository.deleteById(id);
+    }
+
+    public List<Ticket> findByPerson(Person person){
+        return ticketRepository.findByPerson(person);
     }
 }

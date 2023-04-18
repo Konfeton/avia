@@ -9,6 +9,8 @@
 </head>
 <body>
 
+<div th:replace="fragments/header :: header"></div>
+
 
 <form th:action="@{/people/login}" th:method="post" th:object="${person}">
     <label for="email">Email</label>
@@ -19,6 +21,7 @@
 </form>
 <a href="/people/registration">Register</a>
 
+<div th:replace="fragments/footer :: footer"></div>
 
 </body>
 </html>

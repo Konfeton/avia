@@ -1,16 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.thymeleaf.org "><head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/3d4b06e265.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
     <title>Title</title>
 </head>
 <body>
-<div th:each="person : ${people}">
-    <a th:text="${person.getLogin()}" th:href="@{/people/{id}(id=${person.getId()})}"></a>
-    <p th:text="${person.getPassword()}"></p>
-    <p th:text="${person.getEmail()}"></p>
+<div th:replace="fragments/header :: header"></div>
+
+<div th:each="person : ${people}" th:if="${!session.user.equals(person)}">
+    <label for="email">Email</label>
+    <p id="email">[(${person.getEmail()})]</p>
+    <label for="password">Password</label>
+    <p id="password">[(${person.getPassword()})]</p>
+    <label for="lastname">Lastname</label>
+    <p id="lastname">[(${person.getLastName()})]</p>
+    <label for="firstname">Firstname</label>
+    <p id="firstname">[(${person.getFirstName()})]</p>
+    <label for="date-of-birthday">DateOfBirthday</label>
+    <p id="date-of-birthday">[(${person.getDateOfBirthday()})]</p>
+    <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+        <input type="submit" value="Delete">
+    </form>
 </div>
-<a href="/people/new">Create new</a>
+
+<div th:replace="fragments/footer :: footer"></div>
+
 
 </body>
 </html>

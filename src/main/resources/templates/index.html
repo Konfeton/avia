@@ -2,24 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>Welcome</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/3d4b06e265.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <title>Welcome</title>
 
 </head>
 <body>
-<header>
-    TOur
-    <a th:if="${session.user == null}" href="/people/registration">Register</a>
-    <a th:if="${session.user == null}" href="/people/login">Login</a>
-    <p th:if="${session.user != null}" th:text="${session.user.getFirstName()}"></p>
 
-</header>
+<div th:replace="fragments/header :: header"></div>
+
 
 <div th:each="flight : ${flights}">
-    <form th:action="@{/ticket/{flight_id}(flight_id=${flight.getId()})}" th:method="POST">
-        <input type="submit" value="BUY">
+    <form th:action="@{/ticket}" th:method="POST">
+        <input name="flight_id" type="hidden" th:value="${flight.getId()}">
+        <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">
+        <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>
     </form>
-    <input type="hidden" th:value="${flight.getId()}">
     <p >[(${flight.getDepartureTime()})]</p> <!--equals th:atext="" -->
     <p th:text="${flight.getArrivalTime()}"></p>
     <p th:text="${flight.getFlightInfo()}"></p>
@@ -27,12 +27,15 @@
     <p th:text="${flight.getPlane().getName()}"></p>
     <p th:text="${flight.getDepartureCity().getName()}"></p>
     <p th:text="${flight.getArrivalCity().getName()}"></p>
-    <a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a>
-    <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">
-        <input type="submit" value="Delete">
-    </form>
-    <a href="/flight/new">Add flight</a>
+    <th:block th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}">
+        <a th:href="@{/flight/{id}/edit(id=${flight.getId()})}" class="btn btn-secondary">Edit</a>
+        <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">
+            <input class="btn btn-danger" type="submit" value="Delete">
+        </form>
+        <a href="/flight/new">Add flight</a>
+    </th:block>
 </div>
 
+<div th:replace="fragments/footer :: footer"></div>
 </body>
 </html>

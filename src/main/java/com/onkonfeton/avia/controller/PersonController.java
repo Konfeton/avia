@@ -2,7 +2,10 @@ package com.onkonfeton.avia.controller;
 
 import com.onkonfeton.avia.exceptions.PersonAlreadyExistException;
 import com.onkonfeton.avia.model.Person;
+import com.onkonfeton.avia.model.enums.Role;
+import com.onkonfeton.avia.model.enums.Status;
 import com.onkonfeton.avia.service.PersonService;
+import com.onkonfeton.avia.service.TicketService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/people")
 public class PersonController {
     private final PersonService personService;
+    private final TicketService ticketService;
 
-    public PersonController(PersonService personService) {
+    public PersonController(PersonService personService, TicketService ticketService) {
         this.personService = personService;
+        this.ticketService = ticketService;
     }
 
     @PostMapping
@@ -45,6 +50,12 @@ public class PersonController {
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession httpSession){
+        httpSession.removeAttribute("user");
+        return "redirect:/";
+    }
+
     @GetMapping("/registration")
     public String newPersonForm(Model model){
         if (!model.containsAttribute("person")) {
@@ -64,13 +75,20 @@ public class PersonController {
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable("id") int id, Model model){
         model.addAttribute("person", personService.findById(id));
+        model.addAttribute("roles", Role.values());
+        model.addAttribute("statuses", Status.values());
+
         return "people/edit";
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("person") Person person){
-        personService.update(person);
-        return "redirect:/people";
+    public String update(@ModelAttribute("person") Person person,
+                         @PathVariable("id") int id){
+        try {
+            personService.update(person);
+        } catch (PersonAlreadyExistException e) {
+        }
+        return "redirect:/people/"+id+"/edit";
     }
 
     @GetMapping
@@ -83,6 +101,7 @@ public class PersonController {
     public String showPerson(@PathVariable("id") int id,
                            Model model){
         model.addAttribute("person", personService.findById(id));
+
         return "people/show";
     }
 
@@ -90,5 +109,12 @@ public class PersonController {
     public String delete(@PathVariable("id") int id){
         personService.delete(id);
         return "redirect:/people";
+    }
+
+    @GetMapping("/{id}/ticket")
+    public String getTickets(@PathVariable int id,
+                             Model model){
+        model.addAttribute("tickets", ticketService.findByPerson(personService.findById(id)));
+        return "people/ticket";
     }
 }

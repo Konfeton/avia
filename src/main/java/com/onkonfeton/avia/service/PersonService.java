@@ -42,8 +42,13 @@ public class PersonService {
         return personRepository.findById(id).stream().findAny().orElse(null);
     }
 
-    public void update(Person person){
-        personRepository.save(person);
+    public void update(Person person) throws PersonAlreadyExistException{
+        Person byEmail = findByEmail(person.getEmail());
+        if (byEmail != null && !byEmail.getId().equals(person.getId())){
+            throw new PersonAlreadyExistException();
+        }else {
+            personRepository.save(person);
+        }
     }
 
     public void delete(int id) {

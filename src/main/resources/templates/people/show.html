@@ -5,6 +5,8 @@
     <title>Title</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <div>
     <p th:text="${person.getLogin()}"></p>
     <p th:text="${person.getPassword()}"></p>
