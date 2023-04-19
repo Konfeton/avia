@@ -11,8 +11,33 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
+<div id="errors" th:if="${(param.departure_city != null) and (param.departure_city[0] == '3')}">
+    Input is incorrect
+</div>
+<div>
+    <form th:action="@{/}" th:method="GET">
+        <select name="departure_city" required>
+            <option value="" disabled selected>Select your option</option>
+            <option th:each="city : ${cities}"
+                    th:value="${city.getId()}"
+                    th:text="${city.getName()}"
+                    th:selected="${(param.departure_city != null) and (param.departure_city[0] == city.getId.toString())}">
+            </option>
+        </select>
+        <select name="arrival_city" required>
+            <option value="" disabled selected>Select your option</option>
+            <option th:each="city : ${cities}"
+                    th:value="${city.getId()}"
+                    th:text="${city.getName()}"
+                    th:selected="${(param.arrival_city != null) and (param.arrival_city[0] == city.getId.toString())}">
+            </option>
+        </select>
+        <input name="date" type="date" placeholder="Date">
+        <input type="submit" value="Find">
+    </form>
+</div>
 
 <div th:each="flight : ${flights}">
     <form th:action="@{/ticket}" th:method="POST">
@@ -36,6 +61,6 @@
     </th:block>
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

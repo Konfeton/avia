@@ -1,5 +1,6 @@
 package com.onkonfeton.avia.service;
 
+import com.onkonfeton.avia.model.City;
 import com.onkonfeton.avia.model.Flight;
 import com.onkonfeton.avia.repository.FlightRepository;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,10 @@ public class FlightService {
 
     public Flight findById(int id) {
         return  flightRepository.findById(id).stream().findAny().orElse(null);
+    }
+
+    public List<Flight> findByDepartureCityAndArrivalCity(City arrivalCity, City departureCity){
+        return flightRepository.findByDepartureCityAndArrivalCity(arrivalCity,departureCity);
     }
 
     public void delete(int id) {
