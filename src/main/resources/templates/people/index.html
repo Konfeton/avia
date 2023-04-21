@@ -10,13 +10,17 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
+<!--TODO: add фильтрация по возрасту, поиск по полям(имя фамилия) -->
+<p th:text="'avg age: ' + ${avgYears}"></p>
+<form th:action="@{/people}" th:method="GET">
+    <input type="date" name="min" th:value="${param.min != null ? param.min[0] : ''}">
+    <input type="date" name="max" th:value="${param.max != null ? param.max[0] : ''}">
+</form>
 <div th:each="person : ${people}" th:if="${!session.user.equals(person)}">
     <label for="email">Email</label>
     <p id="email">[(${person.getEmail()})]</p>
-    <label for="password">Password</label>
-    <p id="password">[(${person.getPassword()})]</p>
     <label for="lastname">Lastname</label>
     <p id="lastname">[(${person.getLastName()})]</p>
     <label for="firstname">Firstname</label>
@@ -29,7 +33,7 @@
     </form>
 </div>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 
 </body>

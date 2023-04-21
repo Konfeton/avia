@@ -11,6 +11,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Controller
 @RequestMapping("/people")
 public class PersonController {
@@ -92,8 +95,12 @@ public class PersonController {
     }
 
     @GetMapping
-    public String index(Model model){
-        model.addAttribute("people", personService.findAll());
+    public String index(@RequestParam(value = "min", required = false)LocalDate min,
+                        @RequestParam(value = "max", required = false)LocalDate max,
+                        Model model){
+        List<Person> people = personService.findByDateOfBirthdayBetween(min, max);
+        model.addAttribute("people", people);
+        model.addAttribute("avgYears", people.stream().map(Person::years).mapToInt(Integer::intValue).sum() / people.size());
         return "people/index";
     }
 

@@ -3,8 +3,10 @@ package com.onkonfeton.avia.service;
 import com.onkonfeton.avia.model.City;
 import com.onkonfeton.avia.model.Flight;
 import com.onkonfeton.avia.repository.FlightRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -31,9 +33,15 @@ public class FlightService {
         return  flightRepository.findById(id).stream().findAny().orElse(null);
     }
 
-    public List<Flight> findByDepartureCityAndArrivalCity(City arrivalCity, City departureCity){
-        return flightRepository.findByDepartureCityAndArrivalCity(arrivalCity,departureCity);
+
+    public List<Flight> findByCitiesAndBetweenPrice(City departureCity, City arrivalCity, double price, double price2, Sort sort){
+        return flightRepository.findByDepartureCityAndArrivalCityAndPriceBetween(departureCity, arrivalCity, price, price2, sort);
     }
+
+    public List<Flight> findByDepartureTime(LocalDateTime departureTime){
+        return flightRepository.findByDepartureTimeGreaterThan(departureTime);
+    }
+
 
     public void delete(int id) {
         flightRepository.deleteById(id);

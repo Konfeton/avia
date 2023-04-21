@@ -5,9 +5,16 @@ import com.onkonfeton.avia.model.Person;
 import com.onkonfeton.avia.service.CityService;
 import com.onkonfeton.avia.service.FlightService;
 import com.onkonfeton.avia.service.PlaneService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/flight")
@@ -26,6 +33,8 @@ public class FlightController {
     public String getNewFlightForm(@ModelAttribute("flight") Flight flight, Model model){
         model.addAttribute("cities", cityService.findAll());
         model.addAttribute("planes", planeService.findAll());
+        model.addAttribute("minTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm")));
+        model.addAttribute("maxTime", LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm")));
         return "flight/new";
     }
 

@@ -7,13 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
 public class Flight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,9 @@ public class Flight {
     private String flightInfo;
     private double price;
 
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Ticket> tickets = new HashSet<>();
+
     @OneToOne
     @JoinColumn(name = "plane_id", nullable = false)
     private Plane plane;
@@ -42,5 +47,8 @@ public class Flight {
     @JoinColumn(name = "arrival_city_id", nullable = false)
     private City arrivalCity;
 
+    public long flightTime(){
+        return Duration.between(arrivalTime, departureTime).toHours();
+    }
 
 }

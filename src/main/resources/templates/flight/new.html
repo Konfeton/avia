@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.thymeleaf.org "><head>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -10,18 +10,24 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
+<p th:text="${time}"></p>
 <form th:action="@{/flight}" th:method="POST" th:object="${flight}">
-    <label for="arrival-time">Время прибытия</label>
-    <input type="datetime-local"
-           id="arrival-time"
-           th:field="*{arrivalTime}">
-    <br>
+
     <label for="departure-time">Время отправления</label>
     <input type="datetime-local"
            id="departure-time"
+           th:min="${minTime}"
+           th:max="${maxTime}"
            th:field="*{departureTime}">
     <br>
+
+    <label for="arrival-time">Время прибытия</label>
+    <input type="datetime-local"
+           id="arrival-time"
+           th:min="${minTime}"
+           th:max="${maxTime}"
+           th:field="*{arrivalTime}">
 
     <br>
     <label for="flight-info">Информация о полёте</label>
@@ -66,7 +72,7 @@
 
 </form>
 
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 
 </body>

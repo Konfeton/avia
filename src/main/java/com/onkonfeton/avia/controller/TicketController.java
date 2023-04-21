@@ -19,22 +19,9 @@ public class TicketController {
         this.ticketService = ticketService;
     }
 
-    @GetMapping
-    public String index(Model model){
-        model.addAttribute("tickets", ticketService.findAll());
-        return "ticket/index";
-    }
-
-    @GetMapping("/new")
-    public String getNewTicketForm(@ModelAttribute("ticket") Ticket ticket, Model model){
-        return "ticket/new";
-    }
-
     @PostMapping("")
     public String addNewTicket(@RequestParam("flight_id") int flight_id, HttpSession session){
-        Ticket ticket = new Ticket();
-        ticket.setTime(LocalDateTime.now());
-        ticketService.save(ticket, flight_id, ((Person)session.getAttribute("user")).getId());
+        ticketService.save(new Ticket(), flight_id, ((Person)session.getAttribute("user")).getId());
         return "redirect:/";
     }
 
@@ -42,13 +29,6 @@ public class TicketController {
     public String update(@ModelAttribute("ticket") Ticket ticket){
         ticketService.update(ticket);
         return "redirect:/ticket";
-    }
-
-    @GetMapping("/{id}/edit")
-    public String showTicket(@PathVariable("id") int id,
-                             Model model){
-        model.addAttribute("ticket", ticketService.findById(id));
-        return "ticket/edit";
     }
 
     @DeleteMapping("/{id}")

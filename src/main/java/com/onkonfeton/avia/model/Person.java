@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -52,6 +53,10 @@ public class Person {
 
     public String getFullName(){
         return lastName + " " + firstName;
+    }
+
+    public int years(){
+            return Period.between(dateOfBirthday, LocalDate.now()).getYears();
     }
 
     @Override

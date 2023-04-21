@@ -7,6 +7,7 @@ import com.onkonfeton.avia.model.enums.Status;
 import com.onkonfeton.avia.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 @Service
 public class PersonService {
@@ -53,5 +54,9 @@ public class PersonService {
 
     public void delete(int id) {
         personRepository.deleteById(id);
+    }
+
+    public List<Person> findByDateOfBirthdayBetween(LocalDate dateOfBirthday, LocalDate dateOfBirthday2) {
+        return personRepository.findByDateOfBirthdayBetween(dateOfBirthday, dateOfBirthday2);
     }
 }

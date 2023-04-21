@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -25,7 +27,7 @@ public class Ticket {
     @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false)
     private Flight flight;
 

@@ -9,8 +9,15 @@ header {
 }
 
 footer {
-  color: aliceblue;
+  color: #e0dede;
   padding: 25px 30px;
-  margin-bottom: 40px;
   background-color: black;
+  text-align: center;
 }
+
+footer p{
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  font-size: 10px;
+}
+

@@ -7,6 +7,7 @@ import com.onkonfeton.avia.repository.PersonRepository;
 import com.onkonfeton.avia.repository.TicketRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,14 +28,11 @@ public class TicketService {
     }
 
     public Ticket save(Ticket ticket, int flight_id, int person_id) {
+        ticket.setTime(LocalDateTime.now());
         ticket.setFlight(flightRepository.findById(flight_id).orElse(null));
         ticket.setPerson(personRepository.findById(person_id).orElse(null));
 
         return ticketRepository.save(ticket);
-    }
-
-    public Ticket findById(int id){
-        return ticketRepository.findById(id).stream().findAny().orElse(null);
     }
 
     public void update(Ticket ticket){

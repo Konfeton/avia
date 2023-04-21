@@ -12,16 +12,18 @@
 <body>
 <div th:replace="fragments/header :: header"></div>
 <form th:object="${flight}" th:action="@{/flight/{id}(id=${flight.getId()})}" th:method="PATCH" >
+    <label for="departure-time">Время отправления</label>
+    <input type="datetime-local"
+           id="departure-time"
+    th:field="*{departureTime}">
+    <br>
+
     <label for="arrival-time">Время прибытия</label>
     <input type="datetime-local"
            id="arrival-time"
            th:field="*{arrivalTime}">
     <br>
-    <label for="departure-time">Время отправления</label>
-    <input type="datetime-local"
-           id="departure-time"
-           th:field="*{departureTime}">
-    <br>
+
 
     <br>
     <label for="flight-info">Информация о полёте</label>
@@ -59,6 +61,9 @@
                 th:text="${city.getName()}">
         </option>
     </select>
+    <br>
+    <label>Кол-во билетов куплено</label>
+    <p th:text="*{tickets.size()}"></p>
     <input type="submit" value="Save">
 </form>
 <div th:replace="fragments/footer :: footer"></div>
