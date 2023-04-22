@@ -11,6 +11,7 @@
 </head>
 <body>
 
+
 <div th:replace="~{fragments/header :: header}"></div>
 
 
@@ -53,41 +54,48 @@
     Ничего не найдено
 </div>
 
-<div class="card mb-3" style="max-width: 540px;">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <img src="..." class="img-fluid rounded-start" alt="...">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+
+
+<div th:each="flight : ${flights}">
+
+    <div class="card mb-3 " style="max-width: 600px;">
+        <div class="row g-0 rounded-3">
+            <div class="col-md-3 d-flex pt-4 border-end border-secondary">
+                <form th:action="@{/ticket}" th:method="POST">
+                    <p class="card-text mb-1">[(${flight.getPrice()})] Br</p>
+                    <input name="flight_id" type="hidden" th:value="${flight.getId()}">
+                    <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">
+                    <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>
+                </form>
+            </div>
+            <div class="col-md-9">
+                <div class="card-body">
+                    <h6 class="card-title">[(${flight.getPlane().getName()})]</h6>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<div th:each="flight : ${flights}">
-    <form th:action="@{/ticket}" th:method="POST">
-        <input name="flight_id" type="hidden" th:value="${flight.getId()}">
-        <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">
-        <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>
-    </form>
-    <p >[(${flight.getDepartureTime()})]</p> <!--equals th:atext="" -->
-    <p th:text="${flight.getArrivalTime()}"></p>
-    <p th:text="${flight.flightTime()}"></p>
-    <p th:text="${flight.getPrice()}"></p>
-    <p th:text="${flight.getPlane().getName()}"></p>
-    <p th:text="${flight.getDepartureCity().getName()}"></p>
-    <p th:text="${flight.getArrivalCity().getName()}"></p>
-    <th:block th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}">
-        <button class="btn btn-secondary"><a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a></button>
-        <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">
-            <input class="btn btn-danger" type="submit" value="Delete">
-        </form>
-        <a href="/flight/new">Add flight</a>
-    </th:block>
+    <!--    <form th:action="@{/ticket}" th:method="POST">-->
+    <!--        <input name="flight_id" type="hidden" th:value="${flight.getId()}">-->
+    <!--        <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">-->
+    <!--        <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>-->
+    <!--    </form>-->
+    <!--    <p >[(${flight.getDepartureTime()})]</p> &lt;!&ndash;equals th:atext="" &ndash;&gt;-->
+    <!--    <p th:text="${flight.getArrivalTime()}"></p>-->
+    <!--    <p th:text="${flight.flightTime()}"></p>-->
+    <!--    <p th:text="${flight.getPrice()}"></p>-->
+    <!--    <p th:text="${flight.getPlane().getName()}"></p>-->
+    <!--    <p th:text="${flight.getDepartureCity().getName()}"></p>-->
+    <!--    <p th:text="${flight.getArrivalCity().getName()}"></p>-->
+    <!--    <th:block th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}">-->
+    <!--        <button class="btn btn-secondary"><a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a></button>-->
+    <!--        <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">-->
+    <!--            <input class="btn btn-danger" type="submit" value="Delete">-->
+    <!--        </form>-->
+    <!--        <a href="/flight/new">Add flight</a>-->
+    <!--    </th:block>-->
 </div>
 
 <div th:replace="~{fragments/footer :: footer}"></div>

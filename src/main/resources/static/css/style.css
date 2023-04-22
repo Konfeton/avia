@@ -1,6 +1,11 @@
 * {
   margin: 0 auto;
 }
+
+body{
+  background-color: #f2f2f0;
+}
+
 header {
   color: aliceblue;
   padding: 25px 30px;
