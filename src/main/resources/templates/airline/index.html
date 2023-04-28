@@ -12,10 +12,10 @@
 <body>
 
 <div th:replace="fragments/header :: header"></div>
-<div th:each="plane : ${planes}">
-    <p th:text="${plane.getName()}"></p>
-    <a th:href="@{/plane/{id}/edit(id=${plane.getId()})}">Edit</a>
-    <form th:method="DELETE" th:action="@{/plane/{id}(id=${plane.getId()})}">
+<div th:each="airline : ${airlines}">
+    <p th:text="${airline.getName()}"></p>
+    <a th:href="@{/airline/{id}/edit(id=${airline.getId()})}">Edit</a>
+    <form th:method="DELETE" th:action="@{/airline/{id}(id=${airline.getId()})}">
         <input type="submit" value="Delete">
     </form>
 </div>

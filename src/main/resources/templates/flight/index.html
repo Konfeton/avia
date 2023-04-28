@@ -16,7 +16,7 @@
     <p th:text="${flight.getArrivalTime()}"></p>
     <p th:text="${flight.getFlightInfo()}"></p>
     <p th:text="${flight.getPrice()}"></p>
-    <p th:text="${flight.getPlane().getName()}"></p>
+    <p th:text="${flight.getAirline().getName()}"></p>
     <p th:text="${flight.getDepartureCity().getName()}"></p>
     <p th:text="${flight.getArrivalCity().getName()}"></p>
     <a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a>

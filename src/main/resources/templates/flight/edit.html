@@ -38,11 +38,11 @@
            id="price"
            th:field="*{price}">
     <br>
-    <label for="plane">Самолёт</label>
-    <select id="plane" th:field="*{plane}">
-        <option th:each="plane : ${planes}"
-                th:value="${plane.getId()}"
-                th:text="${plane.getName()}">
+    <label for="airline">Авиакомпания</label>
+    <select id="airline" th:field="*{airline}">
+        <option th:each="airline : ${airlines}"
+                th:value="${airline.getId()}"
+                th:text="${airline.getName()}">
         </option>
     </select>
     <br>

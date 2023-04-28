@@ -18,16 +18,16 @@ public class CityService {
         return cityRepository.findAll();
     }
 
-    public City save(City person) {
-        return cityRepository.save(person);
+    public City save(City city) {
+        return cityRepository.save(city);
     }
 
     public City findById(int id){
         return cityRepository.findById(id).stream().findAny().orElse(null);
     }
 
-    public void update(City person){
-        cityRepository.save(person);
+    public void update(City city){
+        cityRepository.save(city);
     }
 
     public void delete(int id) {

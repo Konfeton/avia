@@ -2,6 +2,10 @@
   margin: 0 auto;
 }
 
+a{
+  text-decoration: none;
+}
+
 body{
   background-color: #f2f2f0;
 }
@@ -26,3 +30,26 @@ footer p{
   font-size: 10px;
 }
 
+.ticket p{
+  margin-bottom: 0.25rem;
+}
+
+.time > p{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.city p{
+  color: #9ea9b7;
+  font-size: 0.75rem;
+}
+
+.card{
+  border-radius: 1.5rem;
+}
+
+.btn-link{
+  text-decoration: none;
+  font-size: 14px;
+  padding: 0 4px 5px;
+}

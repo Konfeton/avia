@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
-    List<Flight> findByDepartureCityAndArrivalCityAndPriceBetween(City departureCity, City arrivalCity, double price, double price2, Sort sort);
+    List<Flight> findByDepartureCityAndArrivalCityAndPriceBetween(City departureCity, City arrivalCity, int price, int price2, Sort sort);
     List<Flight> findByDepartureTimeGreaterThan(LocalDateTime departureTime);
 
 }

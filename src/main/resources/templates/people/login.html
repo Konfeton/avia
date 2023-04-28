@@ -11,19 +11,77 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
 
-<form th:action="@{/people/login}" th:method="post" th:object="${person}">
-    <label for="email">Email</label>
-    <input type="email" th:field="*{email}" id="email" required>
-    <label for="password">Password</label>
-    <input type="password" th:field="*{password}" id="password" required>
-    <input type="submit" value="LogIn">
-</form>
-<a href="/people/registration">Register</a>
+<section class="w-100 p-4 d-flex justify-content-center pb-4">
+    <form th:action="@{/people/login}" th:method="post" th:object="${person}" style="width: 22rem;">
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+            <input th:field="*{email}"  type="email" id="form2Example1" class="form-control" required>
+            <label class="form-label" for="form2Example1" style="margin-left: 0px;">Email address</label>
+            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 88.8px;"></div><div class="form-notch-trailing"></div></div></div>
 
-<div th:replace="fragments/footer :: footer"></div>
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+            <input th:field="*{password}" type="password" id="form2Example2" class="form-control">
+            <label class="form-label" for="form2Example2" style="margin-left: 0px;">Password</label>
+            <div class="form-notch"><div class="form-notch-leading" style="width: 9px;"></div><div class="form-notch-middle" style="width: 64.8px;"></div><div class="form-notch-trailing"></div></div></div>
+
+
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary mb-4 w-100">Sign in</button>
+
+        <!-- Register buttons -->
+        <div class="text-center">
+            <p>Not a member? <a href="/people/registration">Register</a></p>
+        </div>
+    </form>
+</section>
+
+<!--<form th:action="@{/people/login}" th:method="post" th:object="${person}">-->
+<!--    &lt;!&ndash; Email input &ndash;&gt;-->
+<!--    <div class="form-outline mb-4">-->
+<!--        <input th:field="*{email}" type="email" id="form2Example1" class="form-control" required/>-->
+<!--        <label class="form-label" for="form2Example1">Email address</label>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Password input &ndash;&gt;-->
+<!--    <div class="form-outline mb-4">-->
+<!--        <input th:field="*{password}" type="password" id="form2Example2" class="form-control" required/>-->
+<!--        <label class="form-label" for="form2Example2">Password</label>-->
+<!--    </div>-->
+
+
+<!--    &lt;!&ndash; Submit button &ndash;&gt;-->
+<!--    <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>-->
+
+<!--    &lt;!&ndash; Register buttons &ndash;&gt;-->
+<!--    <div class="text-center">-->
+<!--        <p>Not a member? <a href="/people/registration">Register</a></p>-->
+<!--        <p>or sign up with:</p>-->
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-facebook-f"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-google"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-twitter"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-github"></i>-->
+<!--        </button>-->
+<!--    </div>-->
+<!--</form>-->
+
+<div class="position-absolute bottom-0 w-100">
+    <div th:replace="~{fragments/footer :: footer}"></div>
+</div>
 
 </body>
 </html>

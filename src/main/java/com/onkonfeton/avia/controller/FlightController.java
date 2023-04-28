@@ -1,19 +1,14 @@
 package com.onkonfeton.avia.controller;
 
 import com.onkonfeton.avia.model.Flight;
-import com.onkonfeton.avia.model.Person;
 import com.onkonfeton.avia.service.CityService;
 import com.onkonfeton.avia.service.FlightService;
-import com.onkonfeton.avia.service.PlaneService;
-import org.springframework.format.annotation.DateTimeFormat;
+import com.onkonfeton.avia.service.AirlineService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 @Controller
@@ -21,18 +16,18 @@ import java.time.format.DateTimeFormatter;
 public class FlightController {
     private final FlightService flightService;
     private final CityService cityService;
-    private final PlaneService planeService;
+    private final AirlineService airlineService;
 
-    public FlightController(FlightService flightService, CityService cityService, PlaneService planeService) {
+    public FlightController(FlightService flightService, CityService cityService, AirlineService airlineService) {
         this.flightService = flightService;
         this.cityService = cityService;
-        this.planeService = planeService;
+        this.airlineService = airlineService;
     }
 
     @GetMapping("/new")
     public String getNewFlightForm(@ModelAttribute("flight") Flight flight, Model model){
         model.addAttribute("cities", cityService.findAll());
-        model.addAttribute("planes", planeService.findAll());
+        model.addAttribute("airlines", airlineService.findAll());
         model.addAttribute("minTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm")));
         model.addAttribute("maxTime", LocalDateTime.now().plusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'hh:mm")));
         return "flight/new";
@@ -55,7 +50,7 @@ public class FlightController {
                              Model model){
         model.addAttribute("flight", flightService.findById(id));
         model.addAttribute("cities", cityService.findAll());
-        model.addAttribute("planes", planeService.findAll());
+        model.addAttribute("airlines", airlineService.findAll());
         return "flight/edit";
     }
 

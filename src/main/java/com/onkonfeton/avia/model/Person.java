@@ -1,6 +1,7 @@
 package com.onkonfeton.avia.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.onkonfeton.avia.model.enums.Gender;
 import com.onkonfeton.avia.model.enums.Role;
 import com.onkonfeton.avia.model.enums.Status;
 import jakarta.persistence.*;
@@ -42,6 +43,9 @@ public class Person {
     private Role role;
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
     @JsonIgnore
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -19,7 +19,7 @@
     <p th:text="${ticket.getFlight().getArrivalTime()}"></p>
     <p th:text="${ticket.getFlight().getFlightInfo()}"></p>
     <p th:text="${ticket.getFlight().getPrice()}"></p>
-    <p th:text="${ticket.getFlight().getPlane().getName()}"></p>
+    <p th:text="${ticket.getFlight().getAirline().getName()}"></p>
     <p th:text="${ticket.getFlight().getDepartureCity().getName()}"></p>
     <p th:text="${ticket.getFlight().getArrivalCity().getName()}"></p>
     <form th:method="DELETE" th:action="@{/ticket/{id}(id=${ticket.getId()})}">

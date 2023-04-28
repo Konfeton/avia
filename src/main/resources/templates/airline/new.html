@@ -12,9 +12,10 @@
 <body>
 
 <div th:replace="fragments/header :: header"></div>
-<form th:action="@{/plane/{id}(id=${plane.getId()})}" th:method="PATCH" th:object="${plane}">
+<form th:action="@{/airline}" th:method="POST" th:object="${airline}">
     <input type="text" th:field="*{name}">
-    <input type="submit" value="Сохранить">
+    <input type="submit">
+
 </form>
 <div th:replace="fragments/footer :: footer"></div>
 

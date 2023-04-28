@@ -28,16 +28,16 @@ public class Flight {
     @Column(name = "arrival_time", nullable = false)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime arrivalTime;
-    @Column(name = "flight_info" )
+    @Column(name = "flight_info")
     private String flightInfo;
-    private double price;
+    private int price;
 
     @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Ticket> tickets = new HashSet<>();
 
     @OneToOne
-    @JoinColumn(name = "plane_id", nullable = false)
-    private Plane plane;
+    @JoinColumn(name = "airline_id", nullable = false)
+    private Airline airline;
 
     @OneToOne
     @JoinColumn(name = "departure_city_id", nullable = false)
@@ -48,7 +48,7 @@ public class Flight {
     private City arrivalCity;
 
     public long flightTime(){
-        return Duration.between(arrivalTime, departureTime).toHours();
+        return Duration.between(departureTime, arrivalTime).toHours();
     }
 
 }

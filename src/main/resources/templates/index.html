@@ -3,8 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/3d4b06e265.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    <script src="https://kit.fontawesome.com/3d4b06e265.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
     <title>Welcome</title>
 
@@ -17,7 +16,7 @@
 
 
 
-<div>
+<div class="d-flex">
     <form th:action="@{/}" th:method="GET">
         <select name="departure_city" required>
             <option value="" disabled selected>Select departure city</option>
@@ -37,66 +36,84 @@
         </select>
         <input name="date" type="date"  th:min="${time}" required th:value="${param.date != null ? param.date[0] : time}">
         <input type="submit" value="Find">
+        <a class="btn" href="/flight/new">Add flight</a>
+
         <aside>
-            <input name="min" type="number" min="0" max="10000" value="0">
-            <input name="max" type="number" min="0" max="10000" value="10000">
+            <input name="min" type="number" min="0" max="10000" th:value="${param.min !=null ? param.min[0] : 0}" value="0">
+            <input name="max" type="number" min="0" max="10000" th:value="${param.max !=null ? param.max[0] : 10000}" value="10000">
         </aside>
         <label>sort by:</label>
         <select name="sort" required>
-            <option value="ASC" selected>по возрастанию цены</option>
-            <option value="DESC" >по убыванию цены</option>
+            <option value="ASC" th:selected="${(param.sort != null) and (param.sort[0] == 'ASC')}">по возрастанию цены</option>
+            <option value="DESC" th:selected="${(param.sort != null) and (param.sort[0] == 'DESC')}">по убыванию цены</option>
 
         </select>
     </form>
 </div>
 
-<div th:if="${flights.size() == 0}">
+<div class="d-flex justify-content-center mt-2" th:if="${flights.size() == 0}">
     Ничего не найдено
 </div>
 
 
+<div style="min-height: 475px;">
+    <div class="container" th:each="flight : ${flights}">
+        <div class="card mb-3" style="max-width: 600px;">
+            <div class="row g-0">
+                <div class="col-md-3 d-flex pt-4 border-end border-secondary">
+                    <form th:action="@{/ticket}" th:method="POST">
+                        <p class="card-text mb-1">[(${flight.getPrice()})] Br</p>
+                        <input name="flight_id" type="hidden" th:value="${flight.getId()}">
+                        <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">
+                        <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>
+                    </form>
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h6 class="card-title">[(${flight.getAirline().getName()})]</h6>
+                        <div class="container">
+                            <div class="row ticket">
+                                <div class="col time">
+                                    <p class="card-text mb-0 ">[(${flight.getDepartureTime().toLocalTime()})]</p>
+                                    <div class="city">
+                                        <p class="card-text ">[(${flight.getDepartureCity().getName()})]</p>
+                                        <p th:text="${#temporals.format(flight.getDepartureTime(), 'dd MMM, EEE')}" class="card-text mb-0"></p>
+                                    </div>
+                                </div>
 
-<div th:each="flight : ${flights}">
+                                <div class="col-6 text-center">
+                                    <p class="card-text mb-1">В пути: [(${flight.flightTime()})]ч</p>
+                                    <div class="border-bottom border-3 d-flex justify-content-center"></div>
+                                </div>
 
-    <div class="card mb-3 " style="max-width: 600px;">
-        <div class="row g-0 rounded-3">
-            <div class="col-md-3 d-flex pt-4 border-end border-secondary">
-                <form th:action="@{/ticket}" th:method="POST">
-                    <p class="card-text mb-1">[(${flight.getPrice()})] Br</p>
-                    <input name="flight_id" type="hidden" th:value="${flight.getId()}">
-                    <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">
-                    <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>
-                </form>
-            </div>
-            <div class="col-md-9">
-                <div class="card-body">
-                    <h6 class="card-title">[(${flight.getPlane().getName()})]</h6>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+                                <div class="col time text-end">
+                                    <p class="card-text mb-0">[(${flight.getArrivalTime().toLocalTime()})]</p>
+                                    <div class="city">
+                                        <p class="card-text ">[(${flight.getArrivalCity().getName()})]</p>
+                                        <p th:text="${#temporals.format(flight.getArrivalTime(), 'dd MMM, EEE')}" class="card-text mb-0"></p>
+                                    </div>
+                                </div>
+
+                                <div th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}"
+                                     class="card-text text-body-secondary">
+                                    <small>
+                                        <a class="d-inline" th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Редактировать</a>
+                                        <form class="d-inline" th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">
+                                            <input class="btn btn-link" type="submit" value="Удалить">
+                                        </form>
+                                    </small>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!--    <form th:action="@{/ticket}" th:method="POST">-->
-    <!--        <input name="flight_id" type="hidden" th:value="${flight.getId()}">-->
-    <!--        <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">-->
-    <!--        <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>-->
-    <!--    </form>-->
-    <!--    <p >[(${flight.getDepartureTime()})]</p> &lt;!&ndash;equals th:atext="" &ndash;&gt;-->
-    <!--    <p th:text="${flight.getArrivalTime()}"></p>-->
-    <!--    <p th:text="${flight.flightTime()}"></p>-->
-    <!--    <p th:text="${flight.getPrice()}"></p>-->
-    <!--    <p th:text="${flight.getPlane().getName()}"></p>-->
-    <!--    <p th:text="${flight.getDepartureCity().getName()}"></p>-->
-    <!--    <p th:text="${flight.getArrivalCity().getName()}"></p>-->
-    <!--    <th:block th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}">-->
-    <!--        <button class="btn btn-secondary"><a th:href="@{/flight/{id}/edit(id=${flight.getId()})}">Edit</a></button>-->
-    <!--        <form th:method="DELETE" th:action="@{/flight/{id}(id=${flight.getId()})}">-->
-    <!--            <input class="btn btn-danger" type="submit" value="Delete">-->
-    <!--        </form>-->
-    <!--        <a href="/flight/new">Add flight</a>-->
-    <!--    </th:block>-->
 </div>
+
+
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>

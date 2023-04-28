@@ -64,6 +64,8 @@ public class PersonController {
         if (!model.containsAttribute("person")) {
             model.addAttribute("person", new Person());
         }
+        model.addAttribute("min", LocalDate.now().minusYears(80));
+        model.addAttribute("max", LocalDate.now().minusYears(18));
         return "people/registration";
     }
 

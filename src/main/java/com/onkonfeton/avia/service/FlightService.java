@@ -34,7 +34,7 @@ public class FlightService {
     }
 
 
-    public List<Flight> findByCitiesAndBetweenPrice(City departureCity, City arrivalCity, double price, double price2, Sort sort){
+    public List<Flight> findByCitiesAndBetweenPrice(City departureCity, City arrivalCity, int price, int price2, Sort sort){
         return flightRepository.findByDepartureCityAndArrivalCityAndPriceBetween(departureCity, arrivalCity, price, price2, sort);
     }
 

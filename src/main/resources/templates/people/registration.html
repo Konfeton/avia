@@ -10,24 +10,109 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 
 
-<form th:action="@{/people}" th:method="post" th:object="${person}">
-    <label for="email">Email</label>
-    <input type="email" th:field="*{email}" id="email" required>
-    <label for="password">Password</label>
-    <input type="password" th:field="*{password}" id="password" required>
-    <label for="lastname">Lastname</label>
-    <input type="text" th:field="*{lastName}" id="lastname" required>
-    <label for="firstname">Firstname</label>
-    <input type="text" th:field="*{firstName}" id="firstname" required>
-    <label for="date-of-birthday">DateOfBirthday</label>
-    <input type="date" th:field="*{dateOfBirthday}" id="date-of-birthday" max="2005-04-20" min="1943-04-20" required>
-    <input type="submit" value="register">
-</form>
-<a href="/people/login">LogIn</a>
-<div th:replace="fragments/footer :: footer"></div>
+<!--<form th:action="@{/people}" th:method="post" th:object="${person}">-->
+<!--    <label for="email">Email</label>-->
+<!--    <input type="email" th:field="*{email}" id="email" required>-->
+<!--    <label for="password">Password</label>-->
+<!--    <input type="password" th:field="*{password}" id="password" required>-->
+<!--    <label for="lastname">Lastname</label>-->
+<!--    <input type="text" th:field="*{lastName}" id="lastname" required>-->
+<!--    <label for="firstname">Firstname</label>-->
+<!--    <input type="text" th:field="*{firstName}" id="firstname" required>-->
+<!--    <label for="date-of-birthday">DateOfBirthday</label>-->
+<!--    <input type="date" th:field="*{dateOfBirthday}" id="date-of-birthday" max="2005-04-20" min="1943-04-20" required>-->
+<!--    <input type="submit" value="register">-->
+<!--</form>-->
+
+
+
+
+
+<section class="vh-80 gradient-custom">
+    <div class="container py-5 h-80">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Форма регистрации</h3>
+                        <form th:action="@{/people}" th:method="post" th:object="${person}">
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input th:field="*{firstName}" type="text" id="firstName" class="form-control form-control-lg" required/>
+                                        <label class="form-label" for="firstName">Имя</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div class="form-outline">
+                                        <input th:field="*{lastName}" type="text" id="lastName" class="form-control form-control-lg" required/>
+                                        <label class="form-label" for="lastName">Фамилия</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+                                    <div class="form-outline datepicker w-100">
+                                        <input th:field="*{dateOfBirthday}" type="date" class="form-control form-control-lg" id="birthdayDate" th:max="${max}" th:min="${min}" required/>
+                                        <label for="birthdayDate" class="form-label">Birthday</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <h6 class="mb-2 pb-1">Пол: </h6>
+                                    <div class="form-check form-check-inline">
+                                        <input th:field="*{gender}" class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
+                                               value="MALE" checked/>
+                                        <label class="form-check-label" for="maleGender">Мужчина</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input th:field="*{gender}" class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
+                                               value="FEMALE"/>
+                                        <label class="form-check-label" for="femaleGender">Женщина</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <input th:field="*{email}" type="email" id="emailAddress" class="form-control form-control-lg" required/>
+                                        <label class="form-label" for="emailAddress"></label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <input th:field="*{password}" type="password" id="password" class="form-control form-control-lg" required/>
+                                        <label class="form-label" for="password">Пароль</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Зарегистрироваться" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 
 </body>

@@ -21,20 +21,18 @@ public class MainController {
 
     private final FlightService flightService;
     private final CityService cityService;
-    private final PersonService personService;
 
     public MainController(FlightService flightService, CityService cityService, PersonService personService) {
         this.flightService = flightService;
         this.cityService = cityService;
-        this.personService = personService;
     }
 
     @GetMapping("/")
     public String index(@RequestParam(value = "departure_city", required = false)City departure,
                         @RequestParam(value = "arrival_city", required = false)City arrival,
                         @RequestParam(value = "date",required = false) LocalDate date,
-                        @RequestParam(value = "min",required = false, defaultValue = "0") double min,
-                        @RequestParam(value = "max",required = false, defaultValue = "10000") double max,
+                        @RequestParam(value = "min",required = false, defaultValue = "0") int min,
+                        @RequestParam(value = "max",required = false, defaultValue = "10000") int max,
                         @RequestParam(value = "sort", required = false) String sort,
                         Model model){
         if (departure != null && arrival!=null){
