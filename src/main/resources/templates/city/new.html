@@ -10,13 +10,13 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <form th:action="@{/city}" th:method="POST" th:object="${city}">
     <input type="text" th:field="*{name}">
     <input type="submit">
 
 </form>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

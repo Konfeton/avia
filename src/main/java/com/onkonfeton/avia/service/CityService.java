@@ -33,4 +33,8 @@ public class CityService {
     public void delete(int id) {
         cityRepository.deleteById(id);
     }
+
+    public List<City> findByName(String name) {
+        return cityRepository.findByNameIgnoreCaseContaining(name);
+    }
 }

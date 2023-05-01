@@ -10,5 +10,7 @@ import java.util.List;
 @Repository
 public interface PersonRepository extends JpaRepository<Person, Integer> {
     Person findByEmail(String email);
+    List<Person> findByFirstNameContaining(String firstName);
+    List<Person> findByLastNameContaining(String lastName);
     List<Person> findByDateOfBirthdayBetween(LocalDate dateOfBirthday, LocalDate dateOfBirthday2);
 }

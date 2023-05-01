@@ -10,15 +10,20 @@
     <title>Title</title>
 </head>
 <body>
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
+<a href="/city/new">Добавить</a>
+<form th:action="@{/city}" th:method="GET">
+    <input type="text" name="name" placeholder="Поиск">
+    <input type="submit">
+</form>
 <div th:if="${!cities.isEmpty()}" th:each="city : ${cities}">
     <p th:text="${city.getName()}"></p>
-    <a th:href="@{/city/{id}(id=${city.getId()})}">Edit</a>
+    <a th:href="@{/city/{id}/edit(id=${city.getId()})}">Edit</a>
     <form th:method="DELETE" th:action="@{/city/{id}(id=${city.getId()})}">
         <input type="submit" value="Delete">
     </form>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

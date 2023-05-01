@@ -11,13 +11,13 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
 <form th:action="@{/airline}" th:method="POST" th:object="${airline}">
     <input type="text" th:field="*{name}">
     <input type="submit">
 
 </form>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 </html>

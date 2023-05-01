@@ -11,7 +11,12 @@
 </head>
 <body>
 
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="~{fragments/header :: header}"></div>
+<a href="/airline/new">Добавить</a>
+<form th:action="@{/airline}" th:method="GET">
+    <input type="text" name="name" placeholder="Поиск">
+    <input type="submit">
+</form>
 <div th:each="airline : ${airlines}">
     <p th:text="${airline.getName()}"></p>
     <a th:href="@{/airline/{id}/edit(id=${airline.getId()})}">Edit</a>
@@ -19,7 +24,7 @@
         <input type="submit" value="Delete">
     </form>
 </div>
-<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>
 

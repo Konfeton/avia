@@ -17,21 +17,49 @@
 <form th:action="@{/people}" th:method="GET">
     <input type="date" name="min" th:value="${param.min != null ? param.min[0] : ''}">
     <input type="date" name="max" th:value="${param.max != null ? param.max[0] : ''}">
+    <input type="text" name="name">
+    <select name="param">
+        <option value="null">Выберите параметр</option>
+        <option value="firstName">Имя</option>
+        <option value="lastName">Фамилия</option>
+    </select>
+    <input type="submit" value="Найти">
 </form>
-<div th:each="person : ${people}" th:if="${!session.user.equals(person)}">
-    <label for="email">Email</label>
-    <p id="email">[(${person.getEmail()})]</p>
-    <label for="lastname">Lastname</label>
-    <p id="lastname">[(${person.getLastName()})]</p>
-    <label for="firstname">Firstname</label>
-    <p id="firstname">[(${person.getFirstName()})]</p>
-    <label for="date-of-birthday">DateOfBirthday</label>
-    <p id="date-of-birthday">[(${person.getDateOfBirthday()})]</p>
-    <a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
-    <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-        <input type="submit" value="Delete">
-    </form>
-</div>
+
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Фамилия</th>
+        <th scope="col">Имя</th>
+        <th scope="col">Дата Рождения</th>
+        <th scope="col">Роль</th>
+        <th scope="col">Статус</th>
+        <th scope="col">x</th>
+        <th scope="col">y</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="person : ${people}"> <!--th:if="${!session.user.equals(person)}"-->
+        <td id="lastname">[(${person.getLastName()})]</td>
+        <td id="firstname">[(${person.getFirstName()})]</td>
+        <td id="date-of-birthday">[(${person.getDateOfBirthday()})]</td>
+        <td id="role">[(${person.getRole().toString()})]</td>
+        <td id="status">[(${person.getStatus().toString()})]</td>
+        <td>
+            <a class="btn" th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+            <input type="submit" value="Delete">
+            </form>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
 
 <div th:replace="~{fragments/footer :: footer}"></div>
 

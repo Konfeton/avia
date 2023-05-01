@@ -33,4 +33,8 @@ public class AirlineService {
     public void delete(int id) {
         airlineRepository.deleteById(id);
     }
+
+    public List<Airline> findByName(String name) {
+        return airlineRepository.findByNameIgnoreCaseContaining(name);
+    }
 }

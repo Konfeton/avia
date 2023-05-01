@@ -17,8 +17,13 @@ public class CityController {
     }
 
     @GetMapping
-    public String index(Model model){
-        model.addAttribute("cities", cityService.findAll());
+    public String index(@RequestParam(value = "name", required = false, defaultValue = "") String name,
+                        Model model){
+        if (!name.equals("")){
+            model.addAttribute("cities", cityService.findByName(name));
+        }else {
+            model.addAttribute("cities", cityService.findAll());
+        }
         return "city/index";
     }
 
@@ -42,7 +47,7 @@ public class CityController {
 
     @PatchMapping("/{id}")
     public String saveChanges(@ModelAttribute("city") City city){
-        cityService.save(city);
+        cityService.update(city);
         return "redirect:/city";
     }
 

@@ -36,13 +36,13 @@
         </select>
         <input name="date" type="date"  th:min="${time}" required th:value="${param.date != null ? param.date[0] : time}">
         <input type="submit" value="Find">
-        <a class="btn" href="/flight/new">Add flight</a>
+        <a th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}" class="btn" href="/flight/new">Add flight</a>
 
         <aside>
             <input name="min" type="number" min="0" max="10000" th:value="${param.min !=null ? param.min[0] : 0}" value="0">
             <input name="max" type="number" min="0" max="10000" th:value="${param.max !=null ? param.max[0] : 10000}" value="10000">
         </aside>
-        <label>sort by:</label>
+        <label>Сортировать по:</label>
         <select name="sort" required>
             <option value="ASC" th:selected="${(param.sort != null) and (param.sort[0] == 'ASC')}">по возрастанию цены</option>
             <option value="DESC" th:selected="${(param.sort != null) and (param.sort[0] == 'DESC')}">по убыванию цены</option>
@@ -66,6 +66,7 @@
                         <input name="flight_id" type="hidden" th:value="${flight.getId()}">
                         <input th:if="${session.user != null}" type="submit" class="btn btn-primary" value="BUY">
                         <a th:if="${session.user == null}" class="btn btn-primary" href="/people/login">Buy</a>
+                        <p th:if="${session.user != null && session.user.getRole().toString().equals('ADMIN')}"><small>Куплено: [(${flight.getTickets().size()})] </small></p>
                     </form>
                 </div>
                 <div class="col-md-9">

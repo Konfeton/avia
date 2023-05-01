@@ -21,51 +21,130 @@
         </ul>
     </nav>
 </th:block>
-    <div th:if="${session.user.getId() == person.getId()}">
-        <form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
-            <label for="email">Email</label>
-            <input type="email" th:field="*{email}" id="email" required>
-            <label for="password">Password</label>
-            <input type="text" th:field="*{password}" id="password" required>
-            <label for="lastname">Lastname</label>
-            <input type="text" th:field="*{lastName}" id="lastname" required>
-            <label for="firstname">Firstname</label>
-            <input type="text" th:field="*{firstName}" id="firstname" required>
-            <label for="date-of-birthday">DateOfBirthday</label>
-            <input type="date" th:field="*{dateOfBirthday}" id="date-of-birthday" required>
-            <input type="submit" value="Update">
-        </form>
-        <a th:href="@{/people/{id}/ticket(id=${person.getId()})}">Show Tickets</a>
+
+
+<section class="vh-80 gradient-custom">
+    <div class="container py-5 h-80">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">[(${person.getFullName()})]</h3>
+                        <form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
+                            <div class="row mb-4">
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <input th:field="*{email}" type="email" id="emailAddress" class="form-control form-control-lg" th:readonly="${session.user.getId() != person.getId()}"/>
+                                        <label class="form-label" for="emailAddress">Почта</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <input th:field="*{password}" type="text" id="password" class="form-control form-control-lg" th:readonly="${session.user.getId() != person.getId()}"/>
+                                        <label class="form-label" for="password">Пароль</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-4 d-flex align-items-center">
+                                    <div class="form-outline datepicker w-100">
+                                        <input th:field="*{dateOfBirthday}" type="date" class="form-control form-control-lg" id="birthdayDate" th:max="${max}" th:min="${min}" th:readonly="${session.user.getId() != person.getId()}"/>
+                                        <label for="birthdayDate" class="form-label">Дата Рождения</label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <div class="form-outline">
+                                        <input th:field="*{gender}" type="text" id="gender" class="form-control form-control-lg" readonly/>
+                                        <label class="form-label" for="gender">Пол</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div th:if="${session.user.getRole().toString().equals('ADMIN')}" class="row">
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <select class="form-select" th:field="*{role}" th:disabled="${session.user.getId() == person.getId()}">
+                                            <option th:each="role : ${roles}"
+                                                    th:value="${role}"
+                                                    th:text="${role}"
+                                                    th:selected="${person.getRole() == role}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-outline">
+                                        <select class="form-select" th:field="*{status}" th:disabled="${session.user.getId() == person.getId()}">
+                                            <option th:each="status : ${statuses}"
+                                                    th:value="${status}"
+                                                    th:text="${status}"
+                                                    th:selected="${person.getStatus() == status}">
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Обновить" />
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-<div th:if="${session.user.getId() != person.getId()}">
-        <form th:object="${person}" th:action="@{/people/{id}(id=${person.getId()})}" th:method="PATCH" >
-            <label for="email">Email</label>
-            <input type="email" th:field="*{email}" id="email" readonly>
-            <label for="password">Password</label>
-            <input type="text" th:field="*{password}" id="password" readonly>
-            <label for="lastname">Lastname</label>
-            <input type="text" th:field="*{lastName}" id="lastname" readonly>
-            <label for="firstname">Firstname</label>
-            <input type="text" th:field="*{firstName}" id="firstname" readonly>
-            <label for="date-of-birthday">DateOfBirthday</label>
-            <input type="date" th:field="*{dateOfBirthday}" id="date-of-birthday" readonly>
-            <select th:field="*{role}">
-                <option th:each="role : ${roles}"
-                        th:value="${role}"
-                        th:text="${role}"
-                        th:selected="${person.getRole() == role}">
-                </option>
-            </select>
-            <select th:field="*{status}">
-                <option th:each="status : ${statuses}"
-                        th:value="${status}"
-                        th:text="${status}"
-                        th:selected="${person.getStatus() == status}">
-                </option>
-            </select>
-            <input type="submit" value="Update">
-        </form>
+</section>
+
+
+<div style="min-height: 475px;">
+    <div class="container" th:each="ticket : ${tickets}">
+        <div class="card mb-3" style="max-width: 600px;">
+            <div class="row g-0">
+                <div class="col-md-3 d-flex pt-4 border-end border-secondary">
+                    <p class="card-text mb-1">[(${ticket.getFlight().getPrice()})] Br</p>
+                </div>
+                <div class="col-md-9">
+                    <div class="card-body">
+                        <h6 class="card-title">[(${ticket.getFlight().getAirline().getName()})]</h6>
+                        <div class="container">
+                            <div class="row ticket">
+                                <div class="col time">
+                                    <p class="card-text mb-0 ">[(${ticket.getFlight().getDepartureTime().toLocalTime()})]</p>
+                                    <div class="city">
+                                        <p class="card-text ">[(${ticket.getFlight().getDepartureCity().getName()})]</p>
+                                        <p th:text="${#temporals.format(ticket.getFlight().getDepartureTime(), 'dd MMM, EEE')}" class="card-text mb-0"></p>
+                                    </div>
+                                </div>
+
+                                <div class="col-6 text-center">
+                                    <p class="card-text mb-1">В пути: [(${ticket.getFlight().flightTime()})]ч</p>
+                                    <div class="border-bottom border-3 d-flex justify-content-center"></div>
+                                </div>
+
+                                <div class="col time text-end">
+                                    <p class="card-text mb-0">[(${ticket.getFlight().getArrivalTime().toLocalTime()})]</p>
+                                    <div class="city">
+                                        <p class="card-text ">[(${ticket.getFlight().getArrivalCity().getName()})]</p>
+                                        <p th:text="${#temporals.format(ticket.getFlight().getArrivalTime(), 'dd MMM, EEE')}" class="card-text mb-0"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div th:replace="~{fragments/footer :: footer}"></div>
 
 </body>

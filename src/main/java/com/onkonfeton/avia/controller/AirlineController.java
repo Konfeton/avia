@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/airline")
 public class AirlineController {
@@ -17,8 +19,13 @@ public class AirlineController {
     }
 
     @GetMapping
-    public String index(Model model){
-        model.addAttribute("airlines", airlineService.findAll());
+    public String index(@RequestParam(value = "name", required = false, defaultValue = "") String name,
+                        Model model){
+        if (!name.equals("")){
+            model.addAttribute("airlines", airlineService.findByName(name));
+        }else {
+            model.addAttribute("airlines", airlineService.findAll());
+        }
         return "airline/index";
     }
 
@@ -42,7 +49,7 @@ public class AirlineController {
 
     @PatchMapping("/{id}")
     public String saveChanges(@ModelAttribute("airline") Airline airline){
-        airlineService.save(airline);
+        airlineService.update(airline);
         return "redirect:/airline";
     }
 
